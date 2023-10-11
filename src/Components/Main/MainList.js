@@ -2,7 +2,7 @@ const MainList = ({ recipes }) => {
     return (
         <div>
             <hr />
-            Here is where all the recipes willl be listed
+            Here is where all the recipes will be listed
             <div>
                 <p>Recipes: </p>
                 {recipes.length > 0 && (
