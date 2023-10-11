@@ -1,5 +1,6 @@
 import React from "react";
 import Main from "./Components/Main/Main";
+import Components from "./Components/Components";
 import * as Env from "./environments";
 import Parse from "parse";
 
