@@ -8,7 +8,7 @@ export default function Components() {
     return(
         <Router>
             <Routes>
-                <Route path="Recipes" element={<Main />}/>
+                <Route path="/" element={<Main />}/>
             </Routes>
         </Router>
     )
