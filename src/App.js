@@ -1,8 +1,9 @@
 import React from "react";
-import Main from "./Components/Main/Main";
+//import Main from "./Components/Main/Main";
 import Components from "./Components/Components";
 import * as Env from "./environments";
 import Parse from "parse";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 Parse.initialize(Env.APPLICATION_ID, Env.JAVASCRIPT_KEY);
