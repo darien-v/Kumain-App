@@ -14,7 +14,9 @@ function Header() {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav class="me-auto">
                         <Nav.Link href="#About">About</Nav.Link>
-                        <Nav.Link href="#Recipes">Recipes</Nav.Link>
+                        <Nav.Link href="#Recipes">
+                            <Link to="/recipes">Recipes</Link>
+                        </Nav.Link>
                         <Nav.Link href="#Tutorials">Tutorials</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>

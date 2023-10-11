@@ -1,5 +1,6 @@
 //Import all modules to route to
 import Main from "./Main/Main";
+import Home from "./Home/Home"
 import Header from "./Header/Header";
 //Import react router to map location to components
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -10,7 +11,8 @@ export default function Components() {
         <Router>
             <Header />
             <Routes>
-                <Route path="/" element={<Main />}/>
+                <Route path="/" element={<Home />}/>
+                <Route path="/recipes" element={<Main />} />
             </Routes>
         </Router>
     )
