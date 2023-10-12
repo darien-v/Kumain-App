@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { getAllRecipes, Recipes } from "../../Common/Services/RecipeService";
-import MainList from "./MainList";
+import RecipeList from "./RecipeList";
 import { Link } from "react-router-dom";
 
-const Main = () => {
+const Recipe = () => {
     const [recipes, setRecipes] = useState([]);
 
     useEffect(() => {
@@ -21,7 +21,7 @@ const Main = () => {
         <div>
         <div>
             Search for Recipes here!
-            <MainList recipes={recipes} />
+            <RecipeList recipes={recipes} />
         </div>
         <Link to="/mycookbook"><button>Go to Cookbook</button></Link>
         </div>
@@ -29,4 +29,4 @@ const Main = () => {
     );
 };
 
-export default Main;
+export default Recipe;

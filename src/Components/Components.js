@@ -1,5 +1,5 @@
 //Import all modules to route to
-import Main from "./Main/Main";
+import Recipe from "./Recipes/Recipe";
 import Home from "./Home/Home"
 import Header from "./Header/Header";
 import Cookbook from "./Cookbook/Cookbook";
@@ -13,7 +13,7 @@ export default function Components() {
             <Header />
             <Routes>
                 <Route path="/" element={<Home />}/>
-                <Route path="/recipes" element={<Main />} />
+                <Route path="/recipes" element={<Recipe />} />
                 <Route path="/mycookbook" element={<Cookbook />} />
             </Routes>
         </Router>

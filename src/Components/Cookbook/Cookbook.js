@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getCookbook, Cookbooks } from "../../Common/Services/CookbookService";
-import CookbookList from "./CookbookList.js";
+//import CookbookList from "./CookbookList.js";
+import RecipeList from "../Recipes/RecipeList"
 import { Link } from "react-router-dom";
 
 const Cookbook = () => {
@@ -21,7 +22,7 @@ const Cookbook = () => {
 		<div>
         <div>
             Welcome to your Cookbook!
-            <CookbookList recipes={cookbooks} />
+            <RecipeList recipes={cookbooks} />
         </div>
 		<Link to="/"><button>Search more recipes!</button></Link>
 		</div>

@@ -1,6 +1,6 @@
 import { addNewRecipe } from "../../Common/Services/CookbookService";
 
-const MainList = ({ recipes }) => {
+const RecipeList = ({ recipes }) => {
     return (
         <div>
             <hr />
@@ -25,4 +25,4 @@ const MainList = ({ recipes }) => {
     );
 };
 
-export default MainList;
+export default RecipeList;
