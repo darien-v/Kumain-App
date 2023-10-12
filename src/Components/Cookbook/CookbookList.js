@@ -1,10 +1,8 @@
-import { addNewRecipe } from "../../Common/Services/CookbookService";
-
-const MainList = ({ recipes }) => {
+const CookbookList = ({ recipes }) => {
     return (
         <div>
             <hr />
-            Here is where all the recipes will be listed
+            Here are your recipes!
             <div>
                 <p>Recipes: </p>
                 {recipes.length > 0 && (
@@ -13,9 +11,9 @@ const MainList = ({ recipes }) => {
                         <div>
                             <li key={recipe.id}>
                                 {" "}
-                                {recipe.id} | {recipe.get("name")}{" "}
+                                {recipe.id} | {recipe.get("recipe")}{" "}
                             </li>
-                            <button onClick={()=>addNewRecipe(recipe.get("name"))}>Add to Cookbook</button>
+                            <button>Remove from Cookbook</button>
                         </div>
                         ))}
                     </ul>
@@ -25,4 +23,4 @@ const MainList = ({ recipes }) => {
     );
 };
 
-export default MainList;
+export default CookbookList;
