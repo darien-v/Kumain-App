@@ -1,5 +1,6 @@
 //Import all modules to route to
 import Main from "./Main/Main";
+import Cookbook from "./Cookbook/Cookbook";
 //Import react router to map location to components
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
@@ -9,6 +10,7 @@ export default function Components() {
         <Router>
             <Routes>
                 <Route path="/" element={<Main />}/>
+                <Route path="/mycookbook" element={<Cookbook />} />
             </Routes>
         </Router>
     )
