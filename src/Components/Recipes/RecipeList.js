@@ -15,7 +15,7 @@ const RecipeList = ({ recipes }) => {
                                 {" "}
                                 {recipe.id} | {recipe.get("name")}{" "}
                             </li>
-                            <button onClick={()=>addNewRecipe(recipe.get("name"))}>Add to Cookbook</button>
+                            <button onClick={()=>addNewRecipe(recipe)}>Add to Cookbook</button>
                         </div>
                         ))}
                     </ul>
