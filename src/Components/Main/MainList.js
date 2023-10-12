@@ -1,4 +1,4 @@
-import { addNewRecipe } from "../../Common/Services/RecipeService";
+import { addNewRecipe } from "../../Common/Services/CookbookService";
 
 const MainList = ({ recipes }) => {
     return (

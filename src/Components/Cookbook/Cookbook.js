@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getCookbook, Cookbooks } from "../../Common/Services/RecipeService";
+import { getCookbook, Cookbooks } from "../../Common/Services/CookbookService";
 import CookbookList from "./CookbookList.js";
 import { Link } from "react-router-dom";
 
