@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { getCookbook, Cookbooks } from "../../Common/Services/CookbookService";
-//import CookbookList from "./CookbookList.js";
 import CookbookList from "./CookbookList"
 import { Link } from "react-router-dom";
 
