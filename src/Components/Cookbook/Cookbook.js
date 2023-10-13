@@ -27,7 +27,7 @@ const Cookbook = () => {
 		<div>
         <div>
             Welcome to your Cookbook!
-            <CookbookList recipes={recipes} />
+            <CookbookList recipes={recipes} cookbooks={cookbooks} />
         </div>
 		<Link to="/recipes"><button>Search more recipes!</button></Link>
 		</div>
