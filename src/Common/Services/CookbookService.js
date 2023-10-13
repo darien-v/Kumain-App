@@ -3,7 +3,7 @@ import Parse from "parse";
 export let Cookbooks = {};
 Cookbooks.collection = [];
 
-export const getCookbook = () => {
+export const getCookbooks = () => {
     const Cookbook = Parse.Object.extend("Cookbook");
     const query = new Parse.Query(Cookbook);
     return query.find().then((results) => {
@@ -12,31 +12,31 @@ export const getCookbook = () => {
     })
 }
 
+export const getRecipesFromCookbook = async (cookbooks) => {
+	// right now works as passing in cookbooks as array and limiting to one cookbook; subject to change
+	const Recipe = Parse.Object.extend("Recipe");
+	const query = new Parse.Query(Recipe);
+	query.equalTo("cookbook", cookbooks);
+	return query.find().then((results) => {
+		console.log("your recipes: ", results);
+		return results;
+	})
+}
+
 
 // ADD IN CHECK TO DENY ADDING RECIPE TO COOKBOOK TWICE
-export const addNewRecipe = async (Recipe) => {
-    const Cookbook = Parse.Object.extend("Cookbook");
-	const query = new Parse.Query(Cookbook);
-    //Cookbook.set("cookbook", Recipe);
-    //await Cookbook.save();
-    console.log(query);
-	const mycookbook = query.find().then((results) => {
-		console.log(results[0]);
-		return results[0];
-	})
-	// querying for the singular cookbook object, not sure if all users should be restricted to one or not
-	// using that to pass in the query for the recipe to then set that as the pointer or fk for that class
-	console.log(typeof(mycookbook));
+export const addNewRecipe = async (Recipe, cookbooks) => {
+	// right now limiting users to add to one cookbook
+	// could rework this to give each user one "selected" cookbook
+	// so that they can add different recipes to multiple different cookbooks
+	const cookbook = cookbooks[0];
 	const recipe = Parse.Object.extend("Recipe");
 	const query2 = new Parse.Query(recipe);
 	const target_recipe = query2.get(Recipe.id).then( async (object) => {
-		console.log(object);
-		object.set("cookbook", mycookbook)
+		var relation = object.relation("cookbook");
+		relation.add(cookbook);
 		await object.save()
 	});
-	console.log(target_recipe);
-	// target_recipe.set("cookbook", mycookbook)
-	// await target_recipe.save()
 }
 
 // IMPLEMENT DELETE FROM COOKBOOK FUNCTION

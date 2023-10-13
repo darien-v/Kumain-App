@@ -1,6 +1,6 @@
 import { addNewRecipe } from "../../Common/Services/CookbookService";
 
-const RecipeList = ({ recipes }) => {
+const RecipeList = ({ recipes, cookbooks }) => {
     return (
         <div>
             <hr />
@@ -15,7 +15,7 @@ const RecipeList = ({ recipes }) => {
                                 {" "}
                                 {recipe.id} | {recipe.get("name")}{" "}
                             </li>
-                            <button onClick={()=>addNewRecipe(recipe)}>Add to Cookbook</button>
+                            <button onClick={()=>addNewRecipe(recipe, cookbooks)}>Add to Cookbook</button>
                         </div>
                         ))}
                     </ul>
