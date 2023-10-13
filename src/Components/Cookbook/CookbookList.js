@@ -11,8 +11,9 @@ const CookbookList = ({ recipes }) => {
                         <div>
                             <li key={recipe.id}>
                                 {" "}
-                                {recipe.id} | {recipe.get("recipe")}{" "}
+                                {recipe.id} | {recipe.get("name")}{" "}
                             </li>
+							{/* still need to add in functionality to delete */}
                             <button>Remove from Cookbook</button>
                         </div>
                         ))}
