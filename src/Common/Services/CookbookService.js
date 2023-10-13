@@ -26,7 +26,7 @@ export const getRecipesFromCookbook = async (cookbooks) => {
 export const removeRecipesFromCookbook = async (recipe, cookbooks) => {
 	const Recipe = Parse.Object.extend("Recipe");
 	const query = new Parse.Query(Recipe);
-	const target_recipe = query.get(recipe.id).then( async (object) => {
+	return query.get(recipe.id).then( async (object) => {
 		var relation = object.relation("cookbook");
 		relation.remove(cookbooks[0])
 		await object.save()
@@ -41,7 +41,7 @@ export const addNewRecipe = async (Recipe, cookbooks) => {
 	const cookbook = cookbooks[0];
 	const recipe = Parse.Object.extend("Recipe");
 	const query2 = new Parse.Query(recipe);
-	const target_recipe = query2.get(Recipe.id).then( async (object) => {
+	return query2.get(Recipe.id).then( async (object) => {
 		var relation = object.relation("cookbook");
 		relation.add(cookbook);
 		await object.save()
