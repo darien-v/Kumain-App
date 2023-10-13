@@ -23,6 +23,15 @@ export const getRecipesFromCookbook = async (cookbooks) => {
 	})
 }
 
+export const removeRecipesFromCookbook = async (recipe, cookbooks) => {
+	const Recipe = Parse.Object.extend("Recipe");
+	const query = new Parse.Query(Recipe);
+	const target_recipe = query.get(recipe.id).then( async (object) => {
+		var relation = object.relation("cookbook");
+		relation.remove(cookbooks[0])
+		await object.save()
+	})
+}
 
 // ADD IN CHECK TO DENY ADDING RECIPE TO COOKBOOK TWICE
 export const addNewRecipe = async (Recipe, cookbooks) => {

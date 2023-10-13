@@ -1,4 +1,6 @@
-const CookbookList = ({ recipes }) => {
+import { removeRecipesFromCookbook } from "../../Common/Services/CookbookService";
+
+const CookbookList = ({ recipes, cookbooks }) => {
     return (
         <div>
             <hr />
@@ -13,8 +15,8 @@ const CookbookList = ({ recipes }) => {
                                 {" "}
                                 {recipe.id} | {recipe.get("name")}{" "}
                             </li>
-							{/* still need to add in functionality to delete */}
-                            <button>Remove from Cookbook</button>
+							{/* need to update list when deleted; needs a refresh */}
+                            <button onClick={()=>removeRecipesFromCookbook(recipe, cookbooks)}>Remove from Cookbook</button>
                         </div>
                         ))}
                     </ul>
