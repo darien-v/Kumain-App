@@ -1,5 +1,20 @@
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { checkUser } from "../../Common/Services/AuthService.js";
+
 export default function Home() {
+    const [authenticated, setAuthenticated] = useState(false);
+
+    useEffect(() => {
+        if (checkUser()) {
+            setAuthenticated(true);
+        } else {
+            setAuthenticated(false);
+        }
+      }, [authenticated]);
+
     return (
+        <div>
         <section>
             <h2>ku·ma·in</h2>
             <p>/kuˈmaʔin/</p>
@@ -14,5 +29,19 @@ export default function Home() {
             Kumain can do all that and more!
             </p>
         </section>
+        {/* dont allow users to register or login if they are already logged in */}
+        {!authenticated && (
+        <div>
+            <Link to="/register">
+              <button>Register</button>
+            </Link>
+            <br />
+            <br />
+            <Link to="/login">
+              <button>Login</button>
+            </Link>
+        </div>
+      )}
+      </div>
     );
 }
