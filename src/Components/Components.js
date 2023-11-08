@@ -5,6 +5,7 @@ import Header from "./Header/Header";
 import Cookbook from "./Cookbook/Cookbook";
 //Import react router to map location to components
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 
 //We could use this in conjunction with a navbar 
 export default function Components() {
@@ -15,6 +16,7 @@ export default function Components() {
                 <Route path="/" element={<Home />}/>
                 <Route path="/recipes" element={<Recipe />} />
                 <Route path="/mycookbook" element={<Cookbook />} />
+                <Route path="/:username/mycookbook" element={<ProtectedRoute path="/:username/mycookbook" element={<Cookbook/>}/>}/>
             </Routes>
         </Router>
     )
