@@ -25,7 +25,7 @@ const AuthRegister = () => {
           // we should navigate to authenticated user page because when registering and then going to login
           // it throws an error saying you are already logged in because the cookies of the registered user get
           // added to the localStorage. You have to manually delete local Storage and then login after register
-          navigate("/");
+          navigate("/login");
         }
         setAdd(false);
       });

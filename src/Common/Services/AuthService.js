@@ -39,13 +39,16 @@ export const doUserLogIn = async function (currUser) {
 };
 
 //need to modify check user to check if the user is only viewing pages they're allowed to see
-export const checkUserName = (urlUser) => {
-  var user = Parse.User.current()
-  var fetchedUsername = user.fetch().then(function(fetchedUser){
-    return fetchedUser.getUsername();
-  }, function(error){
-    return null;
-  });
+export const checkUserName = async (urlUser) => {
+  var user = Parse.User.current();
+  console.log(user);
+  if (user) {
+    var fetchedUsername = await user.fetch().then(function(fetchedUser){
+      return fetchedUser.getUsername();
+    }, function(error){
+      return null;
+    });
+}
   console.log("actual username: ", fetchedUsername )
   if (fetchedUsername === urlUser){
     return true;
