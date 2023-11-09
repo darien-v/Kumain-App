@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { createUser } from "../../Common/Services/AuthService.js";
+import { createUser, checkUser } from "../../Common/Services/AuthService.js";
 import AuthForm from "./AuthForm";
 import { useNavigate } from "react-router-dom";
 
@@ -14,6 +14,13 @@ const AuthRegister = () => {
   // flag is the state to watch for add/remove updates
   const [add, setAdd] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (checkUser()) {
+      alert("You are already logged in");
+      navigate("/");
+    }
+    }, [navigate]);
 
   useEffect(() => {
     if (newUser && add) {
