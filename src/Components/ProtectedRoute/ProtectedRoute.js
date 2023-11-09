@@ -1,19 +1,18 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { checkUser } from "../../Common/Services/AuthService";
-import Parse from "parse";
+import { checkUserName } from "../../Common/Services/AuthService";
 //import checkUser function here
 
 const ProtectedRoute = ({ element: Component,...rest }) => {
     console.log("element: ", Component);
     const username = useParams();
-    console.log("url username: ", username);
+    console.log("url username: ", username.username);
     //how can we get
-    console.log("actual username: " )
     const navigate = useNavigate();
-    if (checkUser()) {
+    if (checkUserName(username.username)) {
         return <Component />;
     } else {
+        alert("You do not have access to this page");
         navigate("/login");
         //react sees false as a null component, but not null as a null component????
         return false;
