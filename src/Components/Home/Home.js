@@ -1,18 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { checkUser } from "../../Common/Services/AuthService.js";
+import { checkUser, getName } from "../../Common/Services/AuthService.js";
+import Parse from "parse";
 
 export default function Home() {
     const [authenticated, setAuthenticated] = useState(false);
+    const [firstName, setFirstName] = useState("");
 
     useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const name = await getName();
+          setFirstName(name || ''); // Update state with the retrieved name
+        } catch (error) {
+          console.error('Error fetching name:', error);
+        }
+      };
+      fetchData();
         if (checkUser()) {
             setAuthenticated(true);
         } else {
             setAuthenticated(false);
         }
       }, [authenticated]);
-
+    
     return (
         <div>
         <section>
@@ -28,6 +39,11 @@ export default function Home() {
             recipes? Or just figure out what to cook with what you've got on hand?
             Kumain can do all that and more!
             </p>
+            {authenticated && (
+            <div>
+              <h3>Welcome, {firstName}!</h3>
+            </div>
+            )}
         </section>
         {/* dont allow users to register or login if they are already logged in */}
         {!authenticated && (

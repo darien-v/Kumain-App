@@ -48,13 +48,60 @@ export const checkUserName = async (urlUser) => {
     }, function(error){
       return null;
     });
-}
+  }
   console.log("actual username: ", fetchedUsername )
   if (fetchedUsername === urlUser){
     return true;
   }
   return false;
 }
+
+/*
+const checkName = async () => {
+  var user = Parse.User.current();
+  console.log(user);
+  if (user) {
+    var fetchedName = await user.fetch().then(function(fetchedUser){
+      return fetchedUser.get("firstName");
+    }, function(error){
+      return null;
+    });
+  }
+  console.log("fetchedName: ", fetchedName);
+  return fetchedName;
+}
+export const getName = async () => {
+  let firstName = await checkName();
+  return firstName;
+}
+*/
+const checkName = async () => {
+  var user = Parse.User.current();
+  console.log(user);
+  let fetchedName = null;
+
+  if (user) {
+    try {
+      const fetchedUser = await user.fetch();
+      fetchedName = fetchedUser.get("firstName");
+    } catch (error) {
+      fetchedName = null;
+    }
+  }
+
+  console.log("fetchedName: ", fetchedName);
+  return fetchedName || ''; // Return an empty string if fetchedName is null
+};
+
+export const getName = async () => {
+  try {
+    let firstName = await checkName();
+    return firstName || ''; // Return an empty string if firstName is null
+  } catch (error) {
+    console.error("Error occurred: ", error);
+    return ''; // Return an empty string in case of an error
+  }
+};
 
 export const checkUser = () => {
   return Parse.User.current()?.authenticated;

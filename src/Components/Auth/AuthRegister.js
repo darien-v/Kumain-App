@@ -18,7 +18,7 @@ const AuthRegister = () => {
   useEffect(() => {
     if (checkUser()) {
       alert("You are already logged in");
-      navigate("/");
+      navigate("/:username/home")
     }
     }, [navigate]);
 
@@ -32,12 +32,13 @@ const AuthRegister = () => {
           // we should navigate to authenticated user page because when registering and then going to login
           // it throws an error saying you are already logged in because the cookies of the registered user get
           // added to the localStorage. You have to manually delete local Storage and then login after register
-          navigate("/login");
+          //navigate("/login");
+          navigate("/:username/home")
         }
         setAdd(false);
       });
     }
-  }, [newUser, add]);
+  }, [navigate, newUser, add]);
 
   const onChangeHandler = (e) => {
     e.preventDefault();
