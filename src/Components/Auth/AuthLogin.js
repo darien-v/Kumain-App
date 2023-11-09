@@ -28,8 +28,7 @@ const AuthLogin = () => {
             `${userLoggedIn.get("firstName")}, you successfully logged in!`
           );
 		  // redirecting to the protected route here throws a True is not defined error maybe something wrong with Protected Route
-          // navigate(`/${userLoggedIn.get("username")}/mycookbook`);
-		  navigate("/");
+          navigate(`/${userLoggedIn.get("username")}/mycookbook`);
         }
         // redirect user to main app
         setAdd(false);
