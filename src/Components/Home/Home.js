@@ -39,6 +39,7 @@ export default function Home() {
             recipes? Or just figure out what to cook with what you've got on hand?
             Kumain can do all that and more!
             </p>
+            {/*I'd like to have the protected homepage show more than just a welcome message. Maybe recipe reccommendations?*/}
             {authenticated && (
             <div>
               <h3>Welcome, {firstName}!</h3>

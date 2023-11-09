@@ -21,7 +21,7 @@ function Header() {
   
       fetchData();
     }, []);
-  
+    //generate pretty graphics for logo of navbar, in the future
     return (
         <Navbar expand="lg" className="bg-body-tertiary">
             <Container>

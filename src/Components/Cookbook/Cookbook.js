@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { getCookbooks, getRecipesFromCookbook, Cookbooks } from "../../Common/Services/CookbookService";
 import CookbookList from "./CookbookList"
 import { Link } from "react-router-dom";
-
+//Once the authentication stuff is done, let's start linking cookbooks to user profiles, and have them on a protected route
 const Cookbook = () => {
     const [cookbooks, setCookbooks] = useState([]);
 
