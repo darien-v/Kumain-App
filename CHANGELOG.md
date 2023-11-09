@@ -19,4 +19,3 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Login/Register Routing and Forms
 - Protected Router
 - Restriction on unauthenticated users accessing site
-- Different URL for each user
