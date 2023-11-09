@@ -38,6 +38,13 @@ export const doUserLogIn = async function (currUser) {
   // You can redirect or perform any action after successful login.
 };
 
+//need to modify check user to check if the user is only viewing pages they're allowed to see
 export const checkUser = () => {
+  var user = Parse.User.current()
+  var fetchedUsername = user.fetch().then(function(fetchedUser){
+    return fetchedUser.getUsername();
+  }, function(error){
+    return null;
+  });
   return Parse.User.current()?.authenticated;
 }

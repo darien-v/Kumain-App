@@ -20,7 +20,7 @@ export default function Components() {
                 <Route path="/login" element={<AuthLogin />} />
                 <Route path="/recipes" element={<Recipe />} />
                 <Route path="/mycookbook" element={<Cookbook />} />
-                <Route path="/:username/mycookbook" element={<ProtectedRoute path="/:username/mycookbook" element={<Cookbook/>}/>}/>
+                <Route path="/:username/mycookbook" element={<ProtectedRoute path="/:username/mycookbook" element={Cookbook}/>}/>
             </Routes>
         </Router>
     )
