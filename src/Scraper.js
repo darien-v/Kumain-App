@@ -23,15 +23,20 @@ function convertMinutes(durationString){
 //this should return if we were able to successfully scrape, the name, cook time, prep time, servings, and ingredients for a recipe
 async function scrapeRecipe(link){
     try{
-        const {data} = await axios.get()
+        const {data} = await axios.get(link)
         const $ = cheerio.load(data)
         const recipeName = $('[id="article-heading_1-0"]').text()  
+        console.log(recipeName)
         //on allRecipes, the prep and cook time are always first and second respectively
         const prepTime = convertMinutes($('div.mntl-recipe-details__value:first').text())
-        const cookTime = convertMinutes($('div.mntl-recipe-details__value:second').text())
+        console.log("Prep Time: ", prepTime)
+        const cookTime = convertMinutes($('div.mntl-recipe-details__value').eq(1).text())
+        console.log("Cook Time: ", cookTime)
         //serving size usually third, but if additional time is involved, it could be later 
-        const servingSize = parseInt($('div.mntl-recipe-details__item:contains("Servings:").mntl-recipe-details__value').text())
-        const ingredients = [...$('ul.mntl-structured-ingredients__list li span [data-ingredient-name=true]')].map(e => $(e).text())
+        const servingSize = parseInt($('div.mntl-recipe-details__item div.mntl-recipe-details__label:contains("Servings:")').next().text())
+        console.log("Servings: ", servingSize)
+        const ingredients = [...$('[data-ingredient-name="true"]')].map(e => $(e).text())
+        console.log(ingredients)
         return true, recipeName, prepTime, cookTime, servingSize, ingredients
     } catch (err){
         //currently returns error
@@ -50,7 +55,11 @@ async function scrapeCuisinePage(categories){
         const allRecipes = topRecipes.concat(remainingRecipes)
         console.log(allRecipes)
         console.log("Recipe Count: ", allRecipes.length)
-        console.log(scrapeRecipe(allRecipes[0]))
+        let totalScraped = 0
+        //this part here is where I want to actually add the recipes to our backend, but I can't do that until we can retrieve the last recipe scraped
+        //while ((totalScraped <= limit) && (index <= allRecipes.length-1)){
+            
+        //}
     } catch (err){
         console.log(err)
     }
