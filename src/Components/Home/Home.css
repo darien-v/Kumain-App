@@ -1,0 +1,45 @@
+/* The font below is what i'll be using as the "logo" of my website, until I get a chance to make something better */
+@import url('https://fonts.googleapis.com/css2?family=Nabla&display=swap');
+
+/* The image that was originally there now acts as a background to the text explaining the meaning of the name Kumain.
+Once we can implement JS, I want to try making this part more interactive, maybe where hovering over the banner causes
+the image behind it to move? This banner should also resize to fit the window*/
+.front-page-banner{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url(index-banner.jpg);
+    text-align: center;
+    padding-top: 10%;
+    padding-bottom: 10%;
+    background-size: cover;
+    color: white;
+    max-width: 100%;
+    max-height: 400px;
+    font-size: 1rem;
+}
+.front-page-banner h2{
+    font-size: 4rem;
+}
+.summary-text{
+    text-align: center;
+    font-size: medium;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-bottom: 10%;
+}
+
+.navbar-brand{
+    font-family: 'Nabla', sans-serif;
+    font-size: 40px;
+}
+
+.authenticate {
+	text-align: right;
+	padding: 0.5em;
+}
+
+.authenticate button {
+	border-radius: 10%;
+}
+
+.authenticate button:hover {
+	background-color: coral;
+}

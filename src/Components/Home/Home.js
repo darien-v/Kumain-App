@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { checkUser, getName } from "../../Common/Services/AuthService.js";
 import Parse from "parse";
+import 'bootstrap/dist/css/bootstrap.css';
+import './Home.css';
 
 export default function Home() {
     const [authenticated, setAuthenticated] = useState(false);
@@ -26,14 +28,27 @@ export default function Home() {
     
     return (
         <div>
+          {/* dont allow users to register or login if they are already logged in */}
+        {!authenticated && (
+        <div className="authenticate">
+            <Link to="/register">
+              <button>Register</button>
+            </Link>
+            <Link to="/login">
+              <button>Login</button>
+            </Link>
+        </div>
+      )}
         <section>
+          <div className="front-page-banner">
             <h2>ku·ma·in</h2>
             <p>/kuˈmaʔin/</p>
             <p>verb</p>
             <p>to eat, nourish oneself with food</p>
             <p>"Kumain ka na ba?" or "Have you eaten?"</p>
+          </div>
             <hr />
-            <p>
+            <p className="summary-text">
             Kumain is cooking simplified. Want to learn how to cook a specific dish?
             Learn a new skill in the kitchen? Follow your favorite cooks and their
             recipes? Or just figure out what to cook with what you've got on hand?
@@ -46,19 +61,6 @@ export default function Home() {
             </div>
             )}
         </section>
-        {/* dont allow users to register or login if they are already logged in */}
-        {!authenticated && (
-        <div>
-            <Link to="/register">
-              <button>Register</button>
-            </Link>
-            <br />
-            <br />
-            <Link to="/login">
-              <button>Login</button>
-            </Link>
-        </div>
-      )}
       </div>
     );
 }
