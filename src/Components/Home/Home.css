@@ -33,10 +33,11 @@ the image behind it to move? This banner should also resize to fit the window*/
 
 .authenticate {
 	text-align: right;
-	padding: 0.5em;
+	margin: 0.5em;
 }
 
 .authenticate button {
+	margin-right: 0.5em;
 	border-radius: 10%;
 }
 
