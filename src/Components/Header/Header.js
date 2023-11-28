@@ -21,15 +21,18 @@ function Header() {
   
       fetchData();
     }, []);
+    const mystyle = {
+        textDecoration: "none"
+    };
     //generate pretty graphics for logo of navbar, in the future
     return (
         <Navbar expand="lg" className="bg-body-tertiary">
             <Container>
                 <Navbar.Brand href="#home">
                     {checkUser() ?(
-                        <Link to={`/${firstName}/home`}>Kumain</Link>
+                        <Link style={mystyle} to={`/${firstName}/home`}>Kumain</Link>
                     ) : (
-                        <Link to="/">Kumain</Link>
+                        <Link style={mystyle} to="/">Kumain</Link>
                     )}
 
                 </Navbar.Brand>
@@ -37,20 +40,20 @@ function Header() {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav class="me-auto">
                         <Nav.Link href="#my_cookbook">
-                            <Link to="/mycookbook">My Cookbook</Link>
+                            <Link style={mystyle} to="/mycookbook">My Cookbook</Link>
                         </Nav.Link>
                         <Nav.Link href="#Recipes">
-                            <Link to="/recipes">Recipes</Link>
+                            <Link style={mystyle} to="/recipes">Recipes</Link>
                         </Nav.Link>
-                        <Nav.Link href="#Tutorials">Tutorials</Nav.Link>
+                        <Nav.Link style={mystyle} href="#Tutorials">Tutorials</Nav.Link>
                         {!checkUser() ? (
                             <div>
-                                <Nav.Link href="#LogIn"><Link to="/login">Log In</Link></Nav.Link>
-                                <Nav.Link href="#Register"><Link to="/register">Register</Link></Nav.Link>
+                                <Nav.Link href="#LogIn"><Link style={mystyle} to="/login">Log In</Link></Nav.Link>
+                                <Nav.Link href="#Register"><Link style={mystyle} to="/register">Register</Link></Nav.Link>
                             </div>
                         ) : (
                             <div>
-                                <Nav.Link href="#logout">Log Out</Nav.Link>
+                                <Nav.Link style={mystyle} href="#logout">Log Out</Nav.Link>
                             </div>
                         )}
                     </Nav>
