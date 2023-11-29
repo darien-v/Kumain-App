@@ -1,7 +1,8 @@
 const axios = require("axios");
 const cheerio = require("cheerio");
 const pretty = require("pretty")
-const parse = require("parse")
+const Parse = require('parse/node');
+const Env = require ("./environments");
 //this url is the root page from which we navigate to all recipes for each cuisine type
 const rootARURL = "https://www.allrecipes.com/cuisine-a-z-6740455"
 //setting an artificial limit on how many recipes can be scraped on one launch of the web app
@@ -46,7 +47,7 @@ async function scrapeRecipe(link){
     }
 }
 
-async function scrapeCuisinePage(categories){
+async function scrapeCuisinePage(categories, url, totalScraped = 0){
     try{
         const {data} = await axios.get(categories.link)
         const $ = cheerio.load(data)
@@ -55,16 +56,52 @@ async function scrapeCuisinePage(categories){
         const allRecipes = topRecipes.concat(remainingRecipes)
         console.log(allRecipes)
         console.log("Recipe Count: ", allRecipes.length)
-        let totalScraped = 0
+        var linkIndex = 0
+        if (url != undefined){
+            linkIndex = allRecipes.findIndex(x => x == url)
+        }
         //this part here is where I want to actually add the recipes to our backend, but I can't do that until we can retrieve the last recipe scraped
-        //while ((totalScraped <= limit) && (index <= allRecipes.length-1)){
-            
-        //}
+        while ((totalScraped < limit) || (linkIndex <= allRecipes.length-1)){
+            if (totalScraped == limit){
+                console.log("scraped!")
+                return true, limit
+            }
+            if (linkIndex > allRecipes.length-1){
+                console.log("Scraoed what I could")
+                return false, totalScraped
+            }
+            else{
+                var scraped, name, prep, cook, serving, ingredients = scrapeRecipe(allRecipes[linkIndex])
+                if (scraped){
+                    
+                    console.log("Name: ", name)
+                    console.log("Prep Time: ", prep)
+                    console.log("Cook Time: ", cook)
+                    console.log("Serving Size: ", serving)
+                    console.log("Ingredients: ", ingredients)
+                    totalScraped ++
+                    linkIndex ++
+                }
+            }
+        }
     } catch (err){
         console.log(err)
     }
 }
 
+async function getLastRecipe(){
+    const query = new Parse.Query("Recipe")
+    var origin, link
+    query.limit(1)
+    query.descending("createdAt")
+    query.find().then((results) =>{
+        console.log("got most recent recipe created: ", results[0].get("name"))
+        origin = results[0].get("Origin")
+        link = results[0].get("Link")
+    })
+    //if the origin and link can't be obtained, return null
+    return origin, link
+}
 async function scrapeAllRecipes(){
     try{
         //fetch html of AllRecipes cuisine page
@@ -77,9 +114,35 @@ async function scrapeAllRecipes(){
         }))
         console.log(categoriesLinks)
         //from here we grab the links found on each page, set to limit to some arbitrary amount
-        scrapeCuisinePage(categoriesLinks[0])
+        let cuisine, url = getLastRecipe()
+        console.log(cuisine)
+        //if cuisine is founc, start at that cuisine
+        var finished = false
+        var recipesScraped = 0
+        var cuisineIndex = 0
+        if (cuisine != undefined){
+            cuisineList = categoriesLinks.map(cuisine => cuisine.name)
+            cuisineIndex = cuisineList.findIndex(x => x == cuisine)
+        }
+        while (!finished || cuisineIndex <= categoriesLinks.length-1){
+            if (finished){
+                console.log(limit, " recipes scraped")
+                return
+            }
+            if (cuisineIndex > categoriesLinks.length-1){
+                console.log("scraped all remaining recipes")
+                return
+            }
+            console.log("scraping: ", categoriesLinks[cuisineIndex])
+            var isFinished, scraped = scrapeCuisinePage(categoriesLinks[cuisineIndex], url, limit-recipesScraped)
+            finished = isFinished
+            recipesScraped += scraped
+            cuisineIndex ++
+        }
     } catch (err){
         console.log(err)
     }
 }
+Parse.initialize(Env.APPLICATION_ID, Env.JAVASCRIPT_KEY);
+Parse.serverURL = Env.SERVER_URL;
 scrapeAllRecipes()
