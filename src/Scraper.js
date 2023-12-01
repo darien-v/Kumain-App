@@ -47,8 +47,9 @@ async function scrapeRecipe(link){
     }
 }
 
-async function scrapeCuisinePage(categories, url, totalScraped = 0){
+async function scrapeCuisinePage(categories, url, scrapedTotal){
     try{
+        let totalScraped = scrapedTotal
         const {data} = await axios.get(categories.link)
         const $ = cheerio.load(data)
         const topRecipes = [...$("a.comp.card--image-top.mntl-card-list-items.mntl-document-card.mntl-card.card.card--no-image")].map(e => $(e).attr("href"))
@@ -57,11 +58,12 @@ async function scrapeCuisinePage(categories, url, totalScraped = 0){
         console.log(allRecipes)
         console.log("Recipe Count: ", allRecipes.length)
         var linkIndex = 0
-        if (url != undefined){
+        if (url != null){
             linkIndex = allRecipes.findIndex(x => x == url)
         }
         //this part here is where I want to actually add the recipes to our backend, but I can't do that until we can retrieve the last recipe scraped
         while ((totalScraped < limit) || (linkIndex <= allRecipes.length-1)){
+            console.log("scraping recipe #: ", linkIndex)
             if (totalScraped == limit){
                 console.log("scraped!")
                 return true, limit
@@ -71,7 +73,8 @@ async function scrapeCuisinePage(categories, url, totalScraped = 0){
                 return false, totalScraped
             }
             else{
-                var scraped, name, prep, cook, serving, ingredients = scrapeRecipe(allRecipes[linkIndex])
+                console.log("trying to scrape")
+                var scraped, name, prep, cook, serving, ingredients = await scrapeRecipe(allRecipes[linkIndex])
                 if (scraped){
                     
                     console.log("Name: ", name)
@@ -79,13 +82,15 @@ async function scrapeCuisinePage(categories, url, totalScraped = 0){
                     console.log("Cook Time: ", cook)
                     console.log("Serving Size: ", serving)
                     console.log("Ingredients: ", ingredients)
-                    totalScraped ++
-                    linkIndex ++
+                    totalScraped += 1
                 }
+                console.log("total scraped: ", totalScraped)
+                linkIndex ++
             }
         }
     } catch (err){
         console.log(err)
+        return false, 0
     }
 }
 
@@ -112,18 +117,20 @@ async function scrapeAllRecipes(){
             name: markup(e).text().trim(),
             link: markup(e).attr("href"),
         }))
-        console.log(categoriesLinks)
+        //console.log(categoriesLinks)
         //from here we grab the links found on each page, set to limit to some arbitrary amount
-        let cuisine, url = getLastRecipe()
+        let cuisine, url = await getLastRecipe()
         console.log(cuisine)
+        console.log("link: ", typeof(url))
         //if cuisine is founc, start at that cuisine
         var finished = false
         var recipesScraped = 0
         var cuisineIndex = 0
-        if (cuisine != undefined){
+        if (cuisine != null){
             cuisineList = categoriesLinks.map(cuisine => cuisine.name)
             cuisineIndex = cuisineList.findIndex(x => x == cuisine)
         }
+        console.log("Starting at: ", cuisineIndex)
         while (!finished || cuisineIndex <= categoriesLinks.length-1){
             if (finished){
                 console.log(limit, " recipes scraped")
@@ -134,7 +141,7 @@ async function scrapeAllRecipes(){
                 return
             }
             console.log("scraping: ", categoriesLinks[cuisineIndex])
-            var isFinished, scraped = scrapeCuisinePage(categoriesLinks[cuisineIndex], url, limit-recipesScraped)
+            var isFinished, scraped = await scrapeCuisinePage(categoriesLinks[cuisineIndex], url, recipesScraped)
             finished = isFinished
             recipesScraped += scraped
             cuisineIndex ++
