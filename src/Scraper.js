@@ -12,12 +12,25 @@ const limit = 10
 function convertMinutes(durationString){
     let totalTime = 0
     const splitString = durationString.split(" ")
+    /*
     let index = 0
     if (splitString.length > 2){
         totalTime += parseInt(splitString[index])*60
         index += 2
     }
     totalTime += parseInt(splitString[index])
+    */
+    for (i = 1; i <= splitString.length-1; i+= 2){
+        if (splitString[i] == "day" || splitString[i] == "days"){
+            totalTime += parseInt(splitString[i-1]) * 24 * 60
+        }
+        if (splitString[i] == "hr" || splitString[i] == "hrs"){
+            totalTime += parseInt(splitString[i-1])*60
+        }
+        else{
+            totalTime += parseInt(splitString[i-1])
+        }
+    }
     return totalTime
 }
 
@@ -38,18 +51,18 @@ async function scrapeRecipe(link){
         console.log("Servings: ", servingSize)
         const ingredients = [...$('[data-ingredient-name="true"]')].map(e => $(e).text())
         console.log(ingredients)
-        return true, recipeName, prepTime, cookTime, servingSize, ingredients
+        return [true, recipeName, prepTime, cookTime, servingSize, ingredients]
     } catch (err){
         //currently returns error
         console.log("Couldn't retrive html")
         console.log(err)
-        return false, null, null, null, null, null
+        return [false, null, null, null, null, null]
     }
 }
 
-async function scrapeCuisinePage(categories, url, scrapedTotal){
+async function scrapeCuisinePage(categories, url, toScrape){
     try{
-        let totalScraped = scrapedTotal
+        var totalScraped = limit - toScrape
         const {data} = await axios.get(categories.link)
         const $ = cheerio.load(data)
         const topRecipes = [...$("a.comp.card--image-top.mntl-card-list-items.mntl-document-card.mntl-card.card.card--no-image")].map(e => $(e).attr("href"))
@@ -64,33 +77,49 @@ async function scrapeCuisinePage(categories, url, scrapedTotal){
         //this part here is where I want to actually add the recipes to our backend, but I can't do that until we can retrieve the last recipe scraped
         while ((totalScraped < limit) || (linkIndex <= allRecipes.length-1)){
             console.log("scraping recipe #: ", linkIndex)
-            if (totalScraped == limit){
+            if (totalScraped >= limit){
                 console.log("scraped!")
-                return true, limit
+                return [true, limit]
             }
             if (linkIndex > allRecipes.length-1){
                 console.log("Scraoed what I could")
-                return false, totalScraped
+                return [false, totalScraped]
             }
             else{
                 console.log("trying to scrape")
-                var scraped, name, prep, cook, serving, ingredients = await scrapeRecipe(allRecipes[linkIndex])
+                var [scraped, name, prep, cook, serving, ingredients] = await scrapeRecipe(allRecipes[linkIndex])
                 if (scraped){
-                    
+                    /*
                     console.log("Name: ", name)
                     console.log("Prep Time: ", prep)
                     console.log("Cook Time: ", cook)
                     console.log("Serving Size: ", serving)
                     console.log("Ingredients: ", ingredients)
+                    */
+                    const Recipe = Parse.Object.extend("Recipe")
+                    const recipe = new Recipe();
+                    recipe.set("name", name) 
+                    recipe.set("PrepTime", prep)
+                    recipe.set("CookTime", cook)
+                    recipe.set("Servings", serving)
+                    recipe.set("Ingredients", ingredients)
+                    recipe.set("Origin", categories.name)
+                    recipe.set("Link", categories.link)
+                    recipe.save().then((recipe) => {
+                        console.log("recipe ", name, " has been saved")
+                    }, (error) => {
+                        console.log("failed to create object for ", name, "will skip")
+                    })
+                    
                     totalScraped += 1
                 }
-                console.log("total scraped: ", totalScraped)
                 linkIndex ++
             }
+            console.log("total scraped: ", totalScraped)
         }
     } catch (err){
         console.log(err)
-        return false, 0
+        return [false, 0]
     }
 }
 
@@ -124,7 +153,7 @@ async function scrapeAllRecipes(){
         console.log("link: ", typeof(url))
         //if cuisine is founc, start at that cuisine
         var finished = false
-        var recipesScraped = 0
+        var recipesToScrape = limit
         var cuisineIndex = 0
         if (cuisine != null){
             cuisineList = categoriesLinks.map(cuisine => cuisine.name)
@@ -141,9 +170,9 @@ async function scrapeAllRecipes(){
                 return
             }
             console.log("scraping: ", categoriesLinks[cuisineIndex])
-            var isFinished, scraped = await scrapeCuisinePage(categoriesLinks[cuisineIndex], url, recipesScraped)
+            var [isFinished, scraped] = await scrapeCuisinePage(categoriesLinks[cuisineIndex], url, recipesToScrape)
             finished = isFinished
-            recipesScraped += scraped
+            recipesToScrape -= scraped
             cuisineIndex ++
         }
     } catch (err){
