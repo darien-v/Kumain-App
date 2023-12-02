@@ -28,17 +28,6 @@ export default function Home() {
     
     return (
         <div>
-          {/* dont allow users to register or login if they are already logged in */}
-        {!authenticated && (
-        <div className="authenticate">
-            <Link to="/register">
-              <button>Register</button>
-            </Link>
-            <Link to="/login">
-              <button>Login</button>
-            </Link>
-        </div>
-      )}
         <section>
           <div className="front-page-banner">
             <h2>ku·ma·in</h2>
@@ -58,6 +47,17 @@ export default function Home() {
             {authenticated && (
             <div>
               <h3>Welcome, {firstName}!</h3>
+            </div>
+            )}
+            {/* dont allow users to register or login if they are already logged in */}
+            {!authenticated && (
+            <div className="authenticate">
+                <Link to="/register">
+                  <button class="btn btn-btn-outline-primary">Register</button>
+                </Link>
+                <Link to="/login">
+                  <button class="btn btn-btn-outline-primary">Login</button>
+                </Link>
             </div>
             )}
         </section>
