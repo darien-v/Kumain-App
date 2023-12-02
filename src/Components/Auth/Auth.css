@@ -1,0 +1,46 @@
+.auth {
+	text-align: center;
+	margin: 2em;
+	background-color: coral;
+	border-radius: 5%;
+}
+
+.message {
+
+}
+
+.input {
+	margin: auto;
+	width: 75%;
+	padding-top: 0.5%;
+	padding-bottom: 0.5%;
+}
+
+.submit {
+	margin: auto;
+	width: 50%;
+}
+
+.submit button {
+	margin: 2em;
+	border-radius: 50%;
+	border-color: black;
+	padding: 10px 40px;
+}
+
+.submit button:hover {
+	background-color: black;
+	color: white;
+}
+
+.login {
+	padding-bottom: 0.5%;
+}
+
+.link {
+	color: black;
+}
+
+.link:hover {
+	color: white;
+}
