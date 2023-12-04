@@ -39,11 +39,14 @@ the image behind it to move? This banner should also resize to fit the window*/
 .authenticate button {
 	margin: 2em;
 	border-radius: 50%;
+	background-color: coral;
+	color: white;
 	border-color: coral;
 	padding: 10px 40px;
 }
 
 .authenticate button:hover {
-	background-color: coral;
-	color: white;
+	border-color: coral;
+	background-color: white;
+	color: coral;
 }
