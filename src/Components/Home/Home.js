@@ -8,6 +8,15 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './Home.css';
 import Recommend from "../Recommend/Recommend.js";
 
+async function callScraper() {
+  try {
+    await fetch('http://localhost:3001/scrapeRecipes'); 
+    console.log("successfully called scrape all recipes")
+  } catch (error){
+    console.log("error calling scrapeAllRecipes: ", error)
+  }
+}
+
 export default function Home() {
     const [authenticated, setAuthenticated] = useState(false);
     const [firstName, setFirstName] = useState("");
@@ -17,6 +26,7 @@ export default function Home() {
     const [allRecipes, setAllRecipes] = useState([]);
 
     useEffect(() => {
+      callScraper()
         if (Cookbooks.collection.length){
             setCookbooks(Cookbooks.collection);
         } else{

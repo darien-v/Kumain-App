@@ -8,6 +8,9 @@ const rootARURL = "https://www.allrecipes.com/cuisine-a-z-6740455"
 //setting an artificial limit on how many recipes can be scraped on one launch of the web app
 const limit = 10
 
+Parse.initialize(Env.APPLICATION_ID, Env.JAVASCRIPT_KEY);
+Parse.serverURL = Env.SERVER_URL;
+
 //this function assumes the string is either of the "# mins" or "# hr # mins" form
 function convertMinutes(durationString){
     let totalTime = 0
@@ -218,3 +221,5 @@ async function scrapeAllRecipes(){
         console.log(err)
     }
 }
+
+module.exports = { scrapeAllRecipes };
