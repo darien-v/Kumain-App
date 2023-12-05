@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -23,6 +23,14 @@ function Header() {
       fetchData();
     }, []);
     //generate pretty graphics for logo of navbar, in the future
+    const navigate = useNavigate();
+
+    const doLogout = () => {
+        logoutUser();
+        // refresh after logout so header updates
+        navigate("/");
+        navigate(0);
+    }
     return (
         <Navbar expand="lg" className="bg-body-tertiary">
             <Container>
@@ -51,7 +59,7 @@ function Header() {
                             </div>
                         ) : (
                             <div>
-                                <Nav.Link className="path" href="#logout"><Link onClick={logoutUser} className="path" to="/">Log Out</Link></Nav.Link>
+                                <Nav.Link className="path" href="#logout"><Link onClick={doLogout} className="path" to="/">Log Out</Link></Nav.Link>
                             </div>
                         )}
                     </Nav>

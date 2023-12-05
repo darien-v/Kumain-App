@@ -33,7 +33,9 @@ const AuthRegister = () => {
           // it throws an error saying you are already logged in because the cookies of the registered user get
           // added to the localStorage. You have to manually delete local Storage and then login after register
           //navigate("/login");
-          navigate("/:username/home")
+          navigate("/:username/home");
+          // force reload to update header
+          navigate(0);
         }
         setAdd(false);
       });
