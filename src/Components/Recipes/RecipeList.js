@@ -1,4 +1,5 @@
 import { addNewRecipe } from "../../Common/Services/CookbookService";
+import "./Recipes.css";
 
 const RecipeList = ({ recipes, cookbooks }) => {
     return (
@@ -10,12 +11,18 @@ const RecipeList = ({ recipes, cookbooks }) => {
                 {recipes.length > 0 && (
                     <ul>
                         {recipes.map((recipe) => (
-                        <div>
-                            <li key={recipe.id}>
-                                {" "}
-                                {recipe.id} | {recipe.get("name")}{" "}
-                            </li>
-                            <button onClick={()=>addNewRecipe(recipe, cookbooks)}>Add to Cookbook</button>
+                        <div className="recipe-column">
+                            <div className="recipe-row">
+                                <div className="recipe-card">
+                                    <h6><b>{recipe.get("name")}{" "}</b></h6>
+                                    <br />
+                                    <p><b>Ingredients:</b> {recipe.get("Ingredients")}</p>
+                                    <p><b>Servings: </b> {recipe.get("Servings")}</p>
+                                    <a href={recipe.get("Link")} target="_blank">Find it Here!</a>
+                                    <br />
+                                    <button onClick={()=>addNewRecipe(recipe, cookbooks)}>Add to Cookbook</button>
+                                </div>
+                            </div>
                         </div>
                         ))}
                     </ul>
