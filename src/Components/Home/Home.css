@@ -32,15 +32,26 @@ the image behind it to move? This banner should also resize to fit the window*/
 }
 
 .authenticate {
-	text-align: right;
-	margin: 0.5em;
+	text-align: center;
+	margin-top: -10%;
 }
 
 .authenticate button {
-	margin-right: 0.5em;
-	border-radius: 10%;
+	margin: 2em;
+	border-radius: 50%;
+	background-color: coral;
+	color: white;
+	border-color: coral;
+	padding: 10px 40px;
 }
 
 .authenticate button:hover {
-	background-color: coral;
+	border-color: coral;
+	background-color: white;
+	color: coral;
+}
+
+.welcome {
+    margin-top: -10%;
+    margin-left: 1%;
 }

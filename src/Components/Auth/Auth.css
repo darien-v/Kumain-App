@@ -1,0 +1,59 @@
+.image-content {
+	width: 40%;
+	float: left;
+}
+
+.first {
+	height: 310px;
+	background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url(../Home/index-banner.jpg);
+	background-size: 100%;
+	background-repeat: no-repeat;
+}
+
+.second {
+	height: 290px;
+	background-image: linear-gradient(rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.5)), url(../Home/food.jpg);
+	background-size: 108%;
+	background-repeat: no-repeat;
+}
+
+.third {
+	float: left;
+	height: 600px;
+	width: 60%;
+	text-align: center;
+	margin-top: 30px;
+}
+
+.input {
+	width: 100%;
+	padding-top: 0.5%;
+	padding-bottom: 0.5%;
+}
+
+.submit button {
+	margin: 2em;
+	border-radius: 5%;
+	border-color: coral;
+	background-color: coral;
+	color: white;
+	padding: 6px 65px;
+}
+
+.submit button:hover {
+	border-color: coral;
+	background-color: white;
+	color: coral;
+}
+
+.login {
+	padding-bottom: 0.5%;
+}
+
+.link {
+	color: black;
+}
+
+.link:hover {
+	color: coral;
+}

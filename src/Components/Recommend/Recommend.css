@@ -1,0 +1,14 @@
+.refresh {
+	margin: 1em;
+	border-radius: 5%;
+	border-color: coral;
+	background-color: white;
+	color: black;
+	padding: 6px 65px;
+}
+
+.refresh:hover {
+	border-color: white;
+	background-color: coral;
+	color: white;
+}

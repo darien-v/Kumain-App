@@ -1,0 +1,8 @@
+.path {
+	text-decoration: none;
+	color: black;
+}
+
+.path:hover {
+	color: coral;
+}
