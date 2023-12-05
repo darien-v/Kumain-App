@@ -20,7 +20,7 @@ function convertMinutes(durationString){
     }
     totalTime += parseInt(splitString[index])
     */
-    for (i = 1; i <= splitString.length-1; i+= 2){
+    for (var i = 1; i <= splitString.length-1; i+= 2){
         if (splitString[i] == "day" || splitString[i] == "days"){
             totalTime += parseInt(splitString[i-1]) * 24 * 60
         }
@@ -71,8 +71,9 @@ async function scrapeCuisinePage(categories, url, toScrape){
         console.log(allRecipes)
         console.log("Recipe Count: ", allRecipes.length)
         var linkIndex = 0
-        if (url != null){
+        if (url != null || url != ""){
             linkIndex = allRecipes.findIndex(x => x == url)
+            linkIndex += 1
         }
         //this part here is where I want to actually add the recipes to our backend, but I can't do that until we can retrieve the last recipe scraped
         while ((totalScraped < limit) || (linkIndex <= allRecipes.length-1)){
@@ -97,21 +98,28 @@ async function scrapeCuisinePage(categories, url, toScrape){
                     console.log("Ingredients: ", ingredients)
                     */
                     const Recipe = Parse.Object.extend("Recipe")
-                    const recipe = new Recipe();
+                    const recipe = new Recipe()
                     recipe.set("name", name) 
                     recipe.set("PrepTime", prep)
                     recipe.set("CookTime", cook)
                     recipe.set("Servings", serving)
                     recipe.set("Ingredients", ingredients)
                     recipe.set("Origin", categories.name)
-                    recipe.set("Link", categories.link)
+                    recipe.set("Link", allRecipes[linkIndex])
+                    if (totalScraped == limit-1){
+                        console.log("last in cycle, setting to true")
+                        recipe.set("lastInCycle", true)
+                    } else {
+                        recipe.set("lastInCycle", false)
+                    }
                     recipe.save().then((recipe) => {
                         console.log("recipe ", name, " has been saved")
+                        totalScraped += 1
                     }, (error) => {
                         console.log("failed to create object for ", name, "will skip")
+                        
                     })
                     
-                    totalScraped += 1
                 }
                 linkIndex ++
             }
@@ -122,19 +130,49 @@ async function scrapeCuisinePage(categories, url, toScrape){
         return [false, 0]
     }
 }
-
+/*
 async function getLastRecipe(){
     const query = new Parse.Query("Recipe")
     var origin, link
-    query.limit(1)
+    query.equalTo("lastInCycle", true)
     query.descending("createdAt")
-    query.find().then((results) =>{
+    [origin, link] = query.find().then((results) =>{
         console.log("got most recent recipe created: ", results[0].get("name"))
         origin = results[0].get("Origin")
+        //console.log(origin)
         link = results[0].get("Link")
+        //console.log(link)
+        return [origin, link]
     })
     //if the origin and link can't be obtained, return null
     return [origin, link]
+}
+*/
+async function getLastRecipe() {
+    const query = new Parse.Query("Recipe");
+    let origin, link;
+
+    try {
+        query.equalTo("lastInCycle", true);
+        query.descending("createdAt");
+
+        const results = await query.find();
+        
+        if (results.length > 0) {
+            console.log("got most recent recipe created:", results[0].get("name"));
+            origin = results[0].get("Origin");
+            console.log(typeof(origin))
+            link = results[0].get("Link");
+        } else {
+            console.log("No recipes found.");
+        }
+    } catch (error) {
+        console.error("Error fetching recipes:", error);
+        // Handle error as needed
+    }
+
+    // If the origin and link can't be obtained, return null
+    return [origin, link];
 }
 async function scrapeAllRecipes(){
     try{
@@ -156,8 +194,8 @@ async function scrapeAllRecipes(){
         var finished = false
         var recipesToScrape = limit
         var cuisineIndex = 0
-        if (cuisine != null){
-            cuisineList = categoriesLinks.map(cuisine => cuisine.name)
+        var cuisineList = categoriesLinks.map(cuisine => cuisine.name)
+        if (cuisine != null || cuisine != ""){
             cuisineIndex = cuisineList.findIndex(x => x == cuisine)
         }
         console.log("Starting at: ", cuisineIndex)
@@ -180,7 +218,3 @@ async function scrapeAllRecipes(){
         console.log(err)
     }
 }
-Parse.initialize(Env.APPLICATION_ID, Env.JAVASCRIPT_KEY);
-Parse.serverURL = Env.SERVER_URL;
-scrapeAllRecipes()
-getLastRecipe()
