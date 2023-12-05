@@ -134,7 +134,7 @@ async function getLastRecipe(){
         link = results[0].get("Link")
     })
     //if the origin and link can't be obtained, return null
-    return origin, link
+    return [origin, link]
 }
 async function scrapeAllRecipes(){
     try{
@@ -148,9 +148,10 @@ async function scrapeAllRecipes(){
         }))
         //console.log(categoriesLinks)
         //from here we grab the links found on each page, set to limit to some arbitrary amount
-        let cuisine, url = await getLastRecipe()
+        //something is wrong here, doesn't return cuisine or URL properly
+        let [cuisine, url] = await getLastRecipe()
         console.log(cuisine)
-        console.log("link: ", typeof(url))
+        console.log("link: ", url)
         //if cuisine is founc, start at that cuisine
         var finished = false
         var recipesToScrape = limit
@@ -182,3 +183,4 @@ async function scrapeAllRecipes(){
 Parse.initialize(Env.APPLICATION_ID, Env.JAVASCRIPT_KEY);
 Parse.serverURL = Env.SERVER_URL;
 scrapeAllRecipes()
+getLastRecipe()
