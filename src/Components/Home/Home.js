@@ -1,13 +1,44 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { checkUser, getName } from "../../Common/Services/AuthService.js";
-import Parse from "parse";
+import { Cookbooks, getCookbooks, getRecipesFromCookbook } from "../../Common/Services/CookbookService";
+import { Recipes, getAllRecipes } from "../../Common/Services/RecipeService.js"
+// import Parse from "parse";
 import 'bootstrap/dist/css/bootstrap.css';
 import './Home.css';
+import Recommend from "../Recommend/Recommend.js";
 
 export default function Home() {
     const [authenticated, setAuthenticated] = useState(false);
     const [firstName, setFirstName] = useState("");
+    const [recommendations, setRecommendations] = useState([]);
+    const [cookbooks, setCookbooks] = useState([]);
+	  const [recipes, setRecipes] = useState([]);
+    const [allRecipes, setAllRecipes] = useState([]);
+
+    useEffect(() => {
+        if (Cookbooks.collection.length){
+            setCookbooks(Cookbooks.collection);
+        } else{
+            getCookbooks().then((cookbooks) => {
+                setCookbooks(cookbooks);
+				// grabbing cookbook item and then passing it into the get recipes function
+				getRecipesFromCookbook(cookbooks[0]).then((recipes) => {
+					setRecipes(recipes);
+				})
+            });
+        }
+    }, []);
+
+    useEffect(() => {
+      if (Recipes.collection.length){
+          setAllRecipes(Recipes.collection);
+      } else{
+          getAllRecipes().then((recipes) => {
+              setAllRecipes(recipes)
+          });
+      }
+    }, []);
 
     useEffect(() => {
       const fetchData = async () => {
@@ -45,8 +76,10 @@ export default function Home() {
             </p>
             {/*I'd like to have the protected homepage show more than just a welcome message. Maybe recipe reccommendations?*/}
             {authenticated && (
-            <div>
+            <div className="welcome">
               <h3>Welcome, {firstName}!</h3>
+              <h5>Check out some recipes that we recommend based on you current tastes and styles!</h5>
+              <Recommend cookbooks={cookbooks} yourRecipes={recipes} allRecipes={allRecipes} />
             </div>
             )}
             {/* dont allow users to register or login if they are already logged in */}

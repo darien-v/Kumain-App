@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { checkUser, getName } from "../../Common/Services/AuthService";
+import { checkUser, getName, logoutUser } from "../../Common/Services/AuthService";
 import { useState, useEffect } from "react";
 import "./Header.css";
 
@@ -51,7 +51,7 @@ function Header() {
                             </div>
                         ) : (
                             <div>
-                                <Nav.Link className="path" href="#logout">Log Out</Nav.Link>
+                                <Nav.Link className="path" href="#logout"><Link onClick={logoutUser} className="path" to="/">Log Out</Link></Nav.Link>
                             </div>
                         )}
                     </Nav>
