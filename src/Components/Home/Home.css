@@ -50,3 +50,8 @@ the image behind it to move? This banner should also resize to fit the window*/
 	background-color: white;
 	color: coral;
 }
+
+.welcome {
+    margin-top: -10%;
+    margin-left: 1%;
+}

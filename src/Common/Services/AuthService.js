@@ -106,3 +106,15 @@ export const getName = async () => {
 export const checkUser = () => {
   return Parse.User.current()?.authenticated;
 }
+
+export async function logoutUser() {
+  try {
+    await Parse.User.logOut();
+    // Log out successful
+    alert('User logged out successfully');
+    // You can redirect to another page or update the UI as needed
+  } catch (error) {
+    // Log out failed, handle the error
+    alert('Error:', error);
+  }
+}
