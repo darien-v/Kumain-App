@@ -99,7 +99,7 @@ export default function Home() {
               {recipes.length > 0 && (
                 <div>
                   <h5>Check out some recipes that we recommend based on you current tastes and styles!</h5>
-                  <Recommend cookbooks={cookbooks} yourRecipes={recipes} allRecipes={allRecipes} /> 
+                  <Recommend cookbooks={cookbooks} yourRecipes={recipes} allRecipes={allRecipes} show={4} /> 
                 </div>
               )}
             </div>
