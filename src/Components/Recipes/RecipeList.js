@@ -16,6 +16,10 @@ const RecipeList = ({ recipes, cookbooks }) => {
                     <Col md={4}>
                         <div className="recipe-card">
                             <h6><b>{recipe.get("name")}{" "}</b></h6>
+                            {recipe.get("ImageURL") && (
+                                <img src={recipe.get("ImageURL")} height="200px" width="250px"></img>
+                            )}
+                            <br />
                             <br />
                             <p><b>Ingredients:</b> {recipe.get("Ingredients").map((rec, idx) => {
                                 return (idx === recipe.get("Ingredients").length -1) ? rec : rec + ", "
