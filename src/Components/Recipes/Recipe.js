@@ -3,6 +3,7 @@ import { getAllRecipes, Recipes } from "../../Common/Services/RecipeService";
 import { getCookbooks, Cookbooks } from "../../Common/Services/CookbookService";
 import RecipeList from "./RecipeList";
 import { Link } from "react-router-dom";
+import "./Recipes.css";
 
 const Recipe = () => {
     const [recipes, setRecipes] = useState([]);
@@ -37,7 +38,11 @@ const Recipe = () => {
             Search for Recipes here!
             <RecipeList recipes={recipes} cookbooks={cookbooks} />
         </div>
-        <Link to="/mycookbook"><button>Go to Cookbook</button></Link>
+        <div className="cookbook-btn">
+            <Link to="/mycookbook">
+                <button class="btn btn-btn-outline-primary">Go to Cookbook</button>
+            </Link>
+        </div>
         </div>
         
     );
