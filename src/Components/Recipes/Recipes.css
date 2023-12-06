@@ -67,3 +67,18 @@
         text-align: left;
     }
 }
+
+.cookbook-btn button {
+	margin: 2em;
+	border-radius: 50%;
+	background-color: coral;
+	color: white;
+	border-color: coral;
+	padding: 10px 40px;
+}
+
+.cookbook-btn button:hover {
+	border-color: coral;
+	background-color: white;
+	color: coral;
+}

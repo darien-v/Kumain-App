@@ -8,6 +8,7 @@ import AuthLogin from "./Auth/AuthLogin";
 //Import react router to map location to components
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
+import RecommendTab from "./Recommend/RecommendTab";
 
 //We could use this in conjunction with a navbar 
 export default function Components() {
@@ -20,6 +21,7 @@ export default function Components() {
                 <Route path="/login" element={<AuthLogin />} />
                 <Route path="/recipes" element={<Recipe />} />
                 <Route path="/mycookbook" element={<Cookbook />} />
+                <Route path="/recommend" element={<RecommendTab />} />
                 <Route path="/:username/home" element={<ProtectedRoute path='/:username/home' element={Home}/>}/>
             </Routes>
         </Router>

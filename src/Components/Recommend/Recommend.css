@@ -12,3 +12,20 @@
 	background-color: coral;
 	color: white;
 }
+
+.see-all {
+	float: right;
+	margin: 1em;
+	text-decoration: none;
+	border-radius: 5%;
+	border-color: coral;
+	background-color: white;
+	color: black;
+	padding: 6px 65px;
+}
+
+.see-all:hover {
+	border-color: white;
+	background-color: coral;
+	color: white;
+}

@@ -88,8 +88,20 @@ export default function Home() {
             {authenticated && (
             <div className="welcome">
               <h3>Welcome, {firstName}!</h3>
-              <h5>Check out some recipes that we recommend based on you current tastes and styles!</h5>
-              <Recommend cookbooks={cookbooks} yourRecipes={recipes} allRecipes={allRecipes} />
+              {recipes.length <= 0 && (
+                <div className="no-recipes">
+                  <h5>Add some recipes to your cookbook so we can give you recommendations!</h5>
+                  <Link to="/recipes">
+                    <button class="btn btn-btn-outline-primary">Go to Recipes</button>
+                  </Link>
+                </div>
+              )}
+              {recipes.length > 0 && (
+                <div>
+                  <h5>Check out some recipes that we recommend based on you current tastes and styles!</h5>
+                  <Recommend cookbooks={cookbooks} yourRecipes={recipes} allRecipes={allRecipes} /> 
+                </div>
+              )}
             </div>
             )}
             {/* dont allow users to register or login if they are already logged in */}

@@ -55,3 +55,18 @@ the image behind it to move? This banner should also resize to fit the window*/
     margin-top: -10%;
     margin-left: 1%;
 }
+
+.no-recipes button {
+	margin: 2em;
+	border-radius: 50%;
+	background-color: coral;
+	color: white;
+	border-color: coral;
+	padding: 10px 40px;
+}
+
+.no-recipes button:hover {
+	border-color: coral;
+	background-color: white;
+	color: coral;
+}
