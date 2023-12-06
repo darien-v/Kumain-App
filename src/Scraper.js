@@ -54,7 +54,13 @@ async function scrapeRecipe(link){
         console.log("Servings: ", servingSize)
         const ingredients = [...$('[data-ingredient-name="true"]')].map(e => $(e).text())
         console.log(ingredients)
-        return [true, recipeName, prepTime, cookTime, servingSize, ingredients]
+        const imagePlaceholder = $('div.primary-image__media');
+        var imageURL = null;
+        if (imagePlaceholder.length > 0) {
+            imageURL = imagePlaceholder.find('img').attr('src');
+            console.log("Image URL: ", imageURL)
+        }
+        return [true, recipeName, prepTime, cookTime, servingSize, ingredients, imageURL]
     } catch (err){
         //currently returns error
         console.log("Couldn't retrive html")
@@ -91,7 +97,7 @@ async function scrapeCuisinePage(categories, url, toScrape){
             }
             else{
                 console.log("trying to scrape")
-                var [scraped, name, prep, cook, serving, ingredients] = await scrapeRecipe(allRecipes[linkIndex])
+                var [scraped, name, prep, cook, serving, ingredients, imageURL] = await scrapeRecipe(allRecipes[linkIndex])
                 if (scraped){
                     /*
                     console.log("Name: ", name)
@@ -107,6 +113,7 @@ async function scrapeCuisinePage(categories, url, toScrape){
                     recipe.set("CookTime", cook)
                     recipe.set("Servings", serving)
                     recipe.set("Ingredients", ingredients)
+                    recipe.set("ImageURL", imageURL)
                     recipe.set("Origin", categories.name)
                     recipe.set("Link", allRecipes[linkIndex])
                     if (totalScraped == limit-1){
