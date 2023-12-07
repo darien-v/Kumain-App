@@ -4,6 +4,7 @@ import { getCookbooks, Cookbooks } from "../../Common/Services/CookbookService";
 import RecipeList from "./RecipeList";
 import { Link } from "react-router-dom";
 import "./Recipes.css";
+import Search from "../Search/Search";
 
 const Recipe = () => {
     const [recipes, setRecipes] = useState([]);
@@ -35,7 +36,7 @@ const Recipe = () => {
     return (
         <div>
             <div>
-                Search for Recipes here!
+                <Search />
                 <RecipeList recipes={recipes} cookbooks={cookbooks} />
             </div>
         </div>

@@ -20,13 +20,17 @@ const CookbookList = ({ recipes, cookbooks }) => {
                     {recipes.map((recipe) => (
                         <Col md={4}>
                             <div className="recipe-card">
-                                <h6><b>{recipe.get("name")}{" "}</b></h6>
-                                <br />
-                                <p><b>Ingredients:</b> {recipe.get("Ingredients").map((rec, idx) => {
-                                    return (idx === recipe.get("Ingredients").length -1) ? rec : rec + ", "
-                                })}</p>
-                                <p><b>Servings: </b> {recipe.get("Servings")}</p>
-                                <a href={recipe.get("Link")} target="_blank">Find it Here!</a>
+                            <h6><b>{recipe.get("name")}{" "}</b></h6>
+                            {recipe.get("ImageURL") && (
+                                <img src={recipe.get("ImageURL")} height="200px" width="250px"></img>
+                            )}
+                            <br />
+                            <br />
+                            <p><b>Ingredients:</b> {recipe.get("Ingredients").map((rec, idx) => {
+                                return (idx === recipe.get("Ingredients").length -1) ? rec : rec + ", "
+                            })}</p>
+                            <p><b>Servings: </b> {recipe.get("Servings")}</p>
+                            <a href={recipe.get("Link")} target="_blank">Find it Here!</a>
                                 <br />
                                 <button onClick={()=>removeRecipesFromCookbook(recipe, cookbooks)}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
