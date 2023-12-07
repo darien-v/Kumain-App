@@ -1,3 +1,4 @@
+import { objectTypeSpreadProperty } from "@babel/types";
 import Parse from "parse";
 
 export let Cookbooks = {};
@@ -27,6 +28,8 @@ export const removeRecipesFromCookbook = async (recipe, cookbooks) => {
 	const Recipe = Parse.Object.extend("Recipe");
 	const query = new Parse.Query(Recipe);
 	return query.get(recipe.id).then( async (object) => {
+		// using a variable to determine if in cookbook now
+		object.set("inCookbook", false);
 		var relation = object.relation("cookbook");
 		relation.remove(cookbooks[0])
 		await object.save()
@@ -42,6 +45,8 @@ export const addNewRecipe = async (Recipe, cookbooks) => {
 	const recipe = Parse.Object.extend("Recipe");
 	const query2 = new Parse.Query(recipe);
 	return query2.get(Recipe.id).then( async (object) => {
+		// using a variable to determine if in cookbook for now
+		object.set("inCookbook", true);
 		var relation = object.relation("cookbook");
 		relation.add(cookbook);
 		await object.save()
