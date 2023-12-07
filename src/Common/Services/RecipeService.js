@@ -13,3 +13,24 @@ export const getAllRecipes = () => {
         return results;
     });
 };
+
+export const getSearchParams = () => {
+    const query = new Parse.Query("Recipe")
+    return query.find().then((results) => {
+        var ingredientsArray, prepArray, cookArray, servingArray = []
+        
+        for (var i=0;i<= results.length-1; i++){
+            ingredientsArray.append(results[i].get("Ingredients"))
+            prepArray.append(results[i].get("PrepTime"))
+            cookArray.append(results[i].get("CookTime"))
+            servingArray.append(results[i].get("Servings"))
+        }
+        var ingredients = [...new Set(ingredientsArray.flat(1))];
+        return [ingredients, Math.min(prepArray), Math.max(prepArray), Math.min(cookArray), Math.max(cookArray), Math.min(servingArray), Math.max(servingArray)]
+    });
+}
+
+export const getSearchResults = (ingredientsList, minCook, maxCook, minPrep, maxPrep, minServe, maxServe) => {
+    const query = new Parse.Query("Recipe")
+    
+}
