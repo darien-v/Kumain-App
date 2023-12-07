@@ -7,9 +7,28 @@ import { Link } from "react-router-dom";
 const Search = () => {
     const [searchParams, setSearchParams] = useState([])
 
+    
+    const [ingredients, setIngredients] = useState([]);
+    const [minCook, setMinCook] = useState(0);
+    const [maxCook, setMaxCook] = useState(0);
+    const [minPrep, setMinPrep] = useState(0);
+    const [maxPrep, setMaxPrep] = useState(0);
+    const [minServings, setMinServings] = useState(0);
+    const [maxServings, setMaxServings] = useState(0);
+    const [cuisineList, setCuisineList] = useState([]);
+
     useEffect(() => {
-        
-    });
+        getSearchParams().then(([ingredients, minPrep, maxPrep, minCook, maxCook, minServings, maxServings, cuisineList]) => {
+            setIngredients(ingredients);
+            setMinPrep(minPrep);
+            setMaxPrep(maxPrep);
+            setMinCook(minCook);
+            setMaxCook(maxCook);
+            setMinServings(minServings);
+            setMaxServings(maxServings);
+            setCuisineList(cuisineList)
+        });
+    }, []);
 
     const [recipes, setRecipes] = useState([]);
 
@@ -22,7 +41,7 @@ const Search = () => {
             });
         }
     }, []);
-
+    /*
     const ingredients = [];
     var minCook = 5;
     var maxCook = 5;
@@ -31,7 +50,8 @@ const Search = () => {
     var minServings = 5;
     var maxServings = 5;
     var cuisineList = [];
-
+    */
+   /*
     if (recipes) {
         recipes.map((rec)=>{
             // cook time
@@ -55,6 +75,7 @@ const Search = () => {
             }
         })
     }
+    */
     return (
         <div>
             <SearchForm ingredients={ingredients} minCook={minCook} maxCook={maxCook} minPrep={minPrep} maxPrep={maxPrep} minServings={minServings} maxServings={maxServings} cuisineList={cuisineList}/>
