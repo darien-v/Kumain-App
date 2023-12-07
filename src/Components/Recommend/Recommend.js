@@ -40,7 +40,6 @@ const Recommend = ({ cookbooks, yourRecipes, allRecipes, show }) => {
 	});
 	var recs = Object.keys(recommendations);
 	recs.sort();
-	console.log(recs);
 	const allRecs = [];
 	allRecipes.map((recipe) => {
 		recs.map((rec) => {
@@ -49,7 +48,6 @@ const Recommend = ({ cookbooks, yourRecipes, allRecipes, show }) => {
 			}
 		})
 	});
-	console.log(allRecs);
 	// we will limit only showing four at a time
 	const refresh = () => {
 		// need to set limit on end recs and then re update to the beginning when it shows the last
