@@ -33,7 +33,7 @@ const AuthLogin = () => {
         }
         // redirect user to main app
         setAdd(false);
-        navigate("/:username/home")
+        navigate(`/${userLoggedIn.get("firstName")}/home`)
         // force reload after redirect so the header can update
         navigate(0)
       });

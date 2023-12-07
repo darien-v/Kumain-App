@@ -18,7 +18,8 @@ const AuthRegister = () => {
   useEffect(() => {
     if (checkUser()) {
       alert("You are already logged in");
-      navigate("/:username/home")
+      // not sure if u can even nav to register if already in but taking out :username
+      navigate("/")
     }
     }, [navigate]);
 
@@ -33,7 +34,7 @@ const AuthRegister = () => {
           // it throws an error saying you are already logged in because the cookies of the registered user get
           // added to the localStorage. You have to manually delete local Storage and then login after register
           //navigate("/login");
-          navigate("/:username/home");
+          navigate(`/${userCreated.get("firstName")}/home`);
           // force reload to update header
           navigate(0);
         }
