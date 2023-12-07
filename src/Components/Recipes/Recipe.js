@@ -34,15 +34,10 @@ const Recipe = () => {
 
     return (
         <div>
-        <div>
-            Search for Recipes here!
-            <RecipeList recipes={recipes} cookbooks={cookbooks} />
-        </div>
-        <div className="cookbook-btn">
-            <Link to="/mycookbook">
-                <button class="btn btn-btn-outline-primary">Go to Cookbook</button>
-            </Link>
-        </div>
+            <div>
+                Search for Recipes here!
+                <RecipeList recipes={recipes} cookbooks={cookbooks} />
+            </div>
         </div>
         
     );
