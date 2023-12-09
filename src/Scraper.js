@@ -116,7 +116,7 @@ async function scrapeCuisinePage(categories, url, toScrape){
                     recipe.set("ImageURL", imageURL)
                     recipe.set("Origin", categories.name)
                     recipe.set("Link", allRecipes[linkIndex])
-                    if (totalScraped == limit-1){
+                    if (totalScraped >= limit-1){
                         console.log("last in cycle, setting to true")
                         recipe.set("lastInCycle", true)
                     } else {
