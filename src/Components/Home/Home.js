@@ -7,6 +7,7 @@ import { Recipes, getAllRecipes } from "../../Common/Services/RecipeService.js"
 import 'bootstrap/dist/css/bootstrap.css';
 import './Home.css';
 import Recommend from "../Recommend/Recommend.js";
+import { getCurrentUser } from "../../Common/Services/AuthService.js";
 
 async function callScraper() {
   try {
@@ -30,13 +31,16 @@ export default function Home() {
         if (Cookbooks.collection.length){
             setCookbooks(Cookbooks.collection);
         } else{
-            getCookbooks().then((cookbooks) => {
+            const user = getCurrentUser();
+            if (user) {
+              getCookbooks(user).then((cookbooks) => {
                 setCookbooks(cookbooks);
-				// grabbing cookbook item and then passing it into the get recipes function
-				getRecipesFromCookbook(cookbooks[0]).then((recipes) => {
-					setRecipes(recipes);
-				})
+				        // grabbing cookbook item and then passing it into the get recipes function
+				        getRecipesFromCookbook(cookbooks[0]).then((recipes) => {
+					        setRecipes(recipes);
+				        })
             });
+          }
         }
     }, []);
 

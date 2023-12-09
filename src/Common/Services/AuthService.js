@@ -1,6 +1,6 @@
 import Parse from "parse";
 
-export const createUser = (newUser) => {
+export const createUser = async (newUser) => {
   const user = new Parse.User();
 
   user.set("username", newUser.email);
@@ -117,3 +117,7 @@ export async function logoutUser() {
     alert('Error:', error);
   }
 }
+
+export const getCurrentUser = () => {
+  return Parse.User.current();
+};
