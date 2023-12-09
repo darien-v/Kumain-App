@@ -5,6 +5,7 @@ import RecipeList from "./RecipeList";
 import { Link } from "react-router-dom";
 import "./Recipes.css";
 import Search from "../Search/Search";
+import { getCurrentUser } from "../../Common/Services/AuthService";
 
 const Recipe = () => {
     const [recipes, setRecipes] = useState([]);
@@ -26,10 +27,13 @@ const Recipe = () => {
         if (Cookbooks.collection.length){
             setCookbooks(Cookbooks.collection);
         } else{
-            getCookbooks().then((cookbooks) => {
-                console.log(cookbooks);
-                setCookbooks(cookbooks)
-            });
+            const user = getCurrentUser();
+            if (user) {
+                getCookbooks(user).then((cookbooks) => {
+                    console.log(cookbooks);
+                    setCookbooks(cookbooks)
+                });
+            }
         }
     }, []);
 
