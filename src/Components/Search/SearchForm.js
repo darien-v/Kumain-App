@@ -15,7 +15,7 @@ const SearchForm = ({ingredients, minCook, maxCook, minPrep, maxPrep, minServing
     const [servings, setServings] =useState(minServings);
 
     const handleValueChange = (e) => {
-        console.log(e.target)
+        console.log(e);
     }
     const ingredientsDict = ingredients.map(item => ({
         label: item,
@@ -31,6 +31,7 @@ const SearchForm = ({ingredients, minCook, maxCook, minPrep, maxPrep, minServing
             <h5>Looking for recipes? Our handy search tool can find recipes from the ingredients you have!</h5>
             <h4>Ingredients</h4>
             <Select
+                onChange = {(e) => handleValueChange(e)}
                 options = {ingredientsDict}
                 isMulti
                 isClearable = {true}
@@ -38,6 +39,7 @@ const SearchForm = ({ingredients, minCook, maxCook, minPrep, maxPrep, minServing
             />
             <h4>Cuisine Types</h4>
             <Select 
+                onChange = {(e) => handleValueChange(e)}
                 options = {cuisineDict}
                 isMulti
                 isClearable = {true}
@@ -50,7 +52,7 @@ const SearchForm = ({ingredients, minCook, maxCook, minPrep, maxPrep, minServing
             </div>
             */}
             <MultiRangeSlider
-                onInput = {handleValueChange}
+                onChange = {(e) => handleValueChange(e)}
                 min= {minPrep}
                 max={maxPrep}
                 label={true}
@@ -58,7 +60,7 @@ const SearchForm = ({ingredients, minCook, maxCook, minPrep, maxPrep, minServing
             />
             <h4>Cook Time</h4>
             <MultiRangeSlider
-                onInput = {handleValueChange}
+                onChange = {(e) => handleValueChange(e)}
                 min= {minCook}
                 max={maxCook}
                 label={true}
@@ -66,7 +68,7 @@ const SearchForm = ({ingredients, minCook, maxCook, minPrep, maxPrep, minServing
             />
             <h4>Serving Size</h4>
             <MultiRangeSlider
-                onInput = {handleValueChange}
+                onChange = {(e) => handleValueChange(e)}
                 min= {minServings}
                 max={maxServings}
                 label={true}
