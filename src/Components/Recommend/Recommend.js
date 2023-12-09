@@ -53,6 +53,13 @@ const Recommend = ({ cookbooks, yourRecipes, allRecipes, show }) => {
 		// need to set limit on end recs and then re update to the beginning when it shows the last
 		setStartRec(startRec+show);
 		setEndRec(endRec+show);
+		if (allRecipes) {
+			console.log(allRecipes);
+			if (endRec >= allRecipes.length - 1) {
+				setStartRec(0);
+				setEndRec(4);
+			}
+		}
 	}
 	const showMore = () => {
 		setEndRec(endRec+show);
@@ -119,6 +126,9 @@ const Recommend = ({ cookbooks, yourRecipes, allRecipes, show }) => {
 							{" "}Show More
 						</button>
 				)}
+				<Link to="/mycookbook">
+                	<button className="see-all">Go to Cookbook</button>
+            	</Link>
 		</Container>
 	);
 };

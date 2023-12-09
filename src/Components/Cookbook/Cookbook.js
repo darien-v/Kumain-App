@@ -33,8 +33,10 @@ const Cookbook = () => {
             Welcome to your Cookbook!
             <CookbookList recipes={recipes} cookbooks={cookbooks} />
         </div>
+        <div className="cookbook-btn">
 		<Link to="/recipes"><button>Search more recipes!</button></Link>
 		</div>
+        </div>
     );
 };
 
