@@ -61,7 +61,45 @@ export const getSearchParams = () => {
     });
 }
 
-export const getSearchResults = (ingredientsList, minCook, maxCook, minPrep, maxPrep, minServe, maxServe) => {
+export const getSearchResults = (searchParams) => {
+    //const Recipe = Parse.Object.extend("Recipe");
     const query = new Parse.Query("Recipe")
-    
+    if (searchParams.selectedIngredients.length > 0){
+        var ingredients = searchParams.selectedIngredients.map(obj => obj.value)
+        query.containsAll("Ingredients", ingredients)
+    }
+    if (searchParams.selectedCuisine.length > 0){
+        /*
+        //find all recipes of selected cuisines, OR them together, then AND them with ingredients
+        var tempQuery1 = new Parse.Query()
+        for(var i = 0; i<= searchParams.selectedCuisine.length; i++){
+            var tempQuery2 = new Parse.Query("Recipe")
+            tempQuery2
+        }
+        */
+       var origins = searchParams.selectedCuisine.map(obj => obj.value)
+       query.containedIn("Origin", origins)
+    }
+    if (searchParams.prepTime != 0){
+        var minTime = searchParams.prepTime.minValue
+        var maxTime = searchParams.prepTime.maxValue
+        query.greaterThanOrEqualTo("PrepTime", minTime)
+        query.lessThanOrEqualTo("PrepTime", maxTime)
+    }
+    if (searchParams.cookTime != 0){
+        var minTime = searchParams.cookTime.minValue
+        var maxTime = searchParams.cookTime.maxValue
+        query.greaterThanOrEqualTo("CookTime", minTime)
+        query.lessThanOrEqualTo("CookTime", maxTime)
+    }
+    if (searchParams.servings != 0){
+        var minServe = searchParams.servings.minValue
+        var maxServe = searchParams.servings.maxValue
+        query.greaterThanOrEqualTo("Servings", minServe)
+        query.lessThanOrEqualTo("Servings", maxServe)
+    }
+    return query.find().then((recipes) => {
+        console.log(recipes)
+        return recipes
+    })
 }
