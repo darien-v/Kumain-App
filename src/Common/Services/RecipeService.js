@@ -16,6 +16,7 @@ export const getAllRecipes = () => {
 
 export const getSearchParams = () => {
     const query = new Parse.Query("Recipe")
+    query.limit(1000)
     return query.find().then((results) => {
         var ingredientsArray =[]
         var prepArray = [] 
@@ -41,8 +42,9 @@ export const getSearchParams = () => {
             }
         }
         var ingredients = [...new Set(ingredientsArray.flat(1))];
+        console.log("last item: ", cuisineArray[cuisineArray.length-1])
         var cuisineList = [...new Set(cuisineArray)]
-        console.log(cuisineList)
+        console.log("Cuisine List: ", cuisineList)
         prepArray = prepArray.filter(value => typeof value === 'number');
         cookArray = cookArray.filter(value => typeof value === 'number');
         servingArray = servingArray.filter(value => typeof value === 'number');
